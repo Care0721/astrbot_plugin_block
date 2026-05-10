@@ -26,8 +26,8 @@ from astrbot.api.star import Star, register, Context
     author="Guardian"
 )
 class GuardianPlugin(Star):
-    def __init__(self, context: Context, config: dict):
-        super().__init__(context, )
+    def __init__(self, context: Context,config: dict):
+        super().__init__(context,config )
 
         # ── 数据持久化 ──────────────────────────────────────────
         self.data_file = os.path.join(os.path.dirname(__file__), "guardian_data.json")
