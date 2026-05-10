@@ -1,6 +1,5 @@
 import json
 import os
-from astrbot.api.plugin import AstrBotPlugin, PluginContext, star
 from astrbot.api.message import MessageEvent, GroupMessageEvent
 from astrbot.api.web import Response, Request
 
