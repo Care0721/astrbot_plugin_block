@@ -15,14 +15,14 @@ from email.mime.text import MIMEText
 from typing import Optional
 
 from astrbot.api import logger
-from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
+from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Star, register, Context
 
 
 @register(
     name="astrbot_plugin_guardian",
     desc="Bot守护者 - 全天监测辱骂行为，自动拉黑并邮件通知",
-    version="1.1.0",
+    version="1.2.0",
     author="Guardian"
 )
 class GuardianPlugin(Star):
@@ -332,12 +332,13 @@ class GuardianPlugin(Star):
     # ★ 核心事件监听：全消息拦截
     # ────────────────────────────────────────────────────────────
 
-    @filter.event_message_create
+    @filter.regex(r"[\s\S]*")
     async def on_message(self, event: AstrMessageEvent):
         """
         监听所有进入 AstrBot 的消息（群聊 + 私聊）：
           ① 黑名单用户 → 拦截并提示
           ② 群聊辱骂（@bot 或 普通消息）→ 拉黑处理
+        注意：AstrBot 4.24.x 无 event_message_create，使用 regex(r"[\s\S]*") 捕获全部消息
         """
         try:
             text     = (event.get_plain_text() or event.message_str or "").strip()
